@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>輪播圖示例</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+        integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        .carousel-container {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            overflow: hidden; /* 隱藏超出容器範圍的部分 */
+        }
+
+        .carousel {
+            display: flex; /* 使幻燈片橫向排列 */
+        }
+
+        .slide {
+            min-width: 100%; /* 每個幻燈片佔滿整個容器的寬度 */
+            box-sizing: border-box;
+        }
+
+        img {
+            width: 100%;
+            height: auto; /* 使圖片寬度100%，高度自動 */
+            display: block;
+        }
+
+        .pre, .next {
+            cursor: pointer; /* 讓兩個按鈕顯示為點擊手勢 */
+            border:1px solid blue;
+            color:blue;
+            background-color:white;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <div class="carousel">
+            <div class="slide"><img src="1.jpg" alt="Image Description 1"></div>
+            <div class="slide"><img src="2.jpg" alt="Image Description 2"></div>
+            <div class="slide"><img src="3.jpg" alt="Image Description 3"></div>
+        </div>
+    </div>
+    <button class="pre">pre</button> <!-- 上一張按鈕 -->
+    <button class="next">next</button> <!-- 下一張按鈕 -->
+
+    <script>
+        let carouselIndex = 0; // 輪播圖的當前索引
+        const carousel = document.querySelector(".carousel"); // 獲取輪播容器
+        const slides = document.querySelectorAll(".slide"); // 獲取所有幻燈片
+        const slideWidth = slides[0].clientWidth; // 計算每個幻燈片的寬度
+
+        // 更新輪播圖位置的函數
+        function updateCarousel() {
+            gsap.to(carousel, {duration: 0.5, x: -slideWidth * carouselIndex});
+        }
+
+        // 為上一張按鈕添加點擊事件
+        document.querySelector(".pre").addEventListener('click', () => {
+            carouselIndex = carouselIndex === 0 ? slides.length - 1 : carouselIndex - 1;
+            updateCarousel(); // 更新輪播圖到新的位置
+        });
+
+        // 為下一張按鈕添加點擊事件
+        document.querySelector(".next").addEventListener('click', () => {
+            carouselIndex = carouselIndex === slides.length - 1 ? 0 : carouselIndex + 1;
+            updateCarousel(); // 更新輪播圖到新的位置
+        });
+    </script>
+</body>
+</html>
